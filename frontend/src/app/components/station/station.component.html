@@ -1,0 +1,14 @@
+<select #paginationSelect (change)="onPageSizeChanged($event)">
+  <option [value]="2">2</option>
+  <option [value]="10">10</option>
+</select>
+
+<ag-grid-angular
+  style="width: 500px; height: 500px;"
+  class="ag-theme-alpine"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+  [pagination]="true"
+  [paginationPageSize]="5"
+  (gridReady)="onGridReady($event)">
+</ag-grid-angular>

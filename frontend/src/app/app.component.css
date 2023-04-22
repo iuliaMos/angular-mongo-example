@@ -1,0 +1,18 @@
+
+.main-container {
+  min-height: 300px;
+}
+.main-sidenav-content {
+  padding: 1px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.main-sidenav {
+  user-select: none;
+}
+
+.with-icon {
+  display: flex;
+  align-items: center;
+}
