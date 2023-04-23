@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {GridApi, GridOptions} from "ag-grid-community";
+import {ColDef, GridApi, GridOptions, IGetRowsParams} from "ag-grid-community";
 import {ActivatedRoute} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
 import {AppServiceService} from "../../services/app-service.service";
 
 @Component({
@@ -18,40 +17,63 @@ export class StationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  columnDefs = [
-    {headerName: 'Make', field: 'make' },
-    {headerName: 'Model', field: 'model' },
-    {headerName: 'Price', field: 'price'}
+  columnDefs: ColDef[] = [
+    {headerName: 'ExternalId', field: 'externalId'},
+    {headerName: 'NameEn', field: 'nameEn'},
+    {headerName: 'NameFi', field: 'nameFi'},
+    {headerName: 'Address Fi', field: 'addressFi'},
+    {headerName: 'City Fi', field: 'cityFi'},
+    {headerName: 'Operator', field: 'operator'},
+    {
+      headerName: 'Capacities',
+      field: 'capacities',
+      filter: 'agNumberColumnFilter',
+      filterParams: {filterOptions: ['equals'], maxNumConditions: 1}
+    },
+    {headerName: 'X', field: 'x', filter: false},
+    {headerName: 'Y', field: 'y', filter: false}
   ];
 
-  rowData = [
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 89000 },
-    { make: 'Abcd', model: 'Type3', price: 8000 },
-    { make: 'Defg', model: 'Type4', price: 4000 },
-    { make: 'Uyg', model: 'Type5', price: 3000 }
-  ];
+  public defaultColDef: ColDef = {
+    flex: 1,
+    sortable: true,
+    filter: 'agTextColumnFilter',
+    filterParams: {filterOptions: ['contains'], maxNumConditions: 1}
+  };
 
-  gridOptions : GridOptions = {
-    rowData: this.rowData,
+
+  gridOptions: GridOptions = {
     columnDefs: this.columnDefs,
     pagination: true,
-    paginationPageSize: 5
-  }
+    paginationPageSize: 10,
+    cacheBlockSize: 10,
+    rowModelType: 'infinite'
+  };
 
   onPageSizeChanged(newPageSize: any) {
-    this.gridOptions.paginationPageSize = Number(newPageSize.target.value);
-    this.gridApi.paginationSetPageSize(Number(newPageSize.target.value));
-  }
+    let size = Number(newPageSize.target.value)
+    this.gridOptions.paginationPageSize = size;
+    this.gridOptions.cacheBlockSize = size;
+    this.gridApi.paginationSetPageSize(size);
+    this.gridApi.refreshInfiniteCache();
+  };
 
   onGridReady(params: any) {
     this.gridApi = params.api;
 
-    /*this.http
-      .get("http://localhost:8080/stations")
-      .subscribe(data => {
-        this.rowData = data;
-      });*/
+    let datasource = {
+      getRows: (params: IGetRowsParams) => {
+        const size = this.gridOptions.paginationPageSize ? this.gridOptions.paginationPageSize : 10;
+        const page = (params.startRow / size) | 0;
+        console.log(params);
+        this.appService.getStations(params, page, size);
+      }
+    }
+    this.gridApi.setDatasource(datasource);
+  }
+
+  resetGridFilters() {
+    this.gridApi.setFilterModel({});
+    this.gridApi.refreshInfiniteCache();
   }
 }

@@ -18,7 +18,8 @@ import {RouterModule, Routes} from "@angular/router";
 export const routes: Routes = [
   {path: '', component: HomeComponent, title: 'Home'},
   {path: 'stations', component: StationComponent, title: 'Stations'},
-  {path: 'journeys', component: JourneyComponent, title: 'Journeys'}
+  {path: 'journeys', component: JourneyComponent, title: 'Journeys'},
+  {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

@@ -1,1 +1,25 @@
-<p>journey works!</p>
+<h2>Journeys</h2>
+<mat-divider/>
+<br/>
+<div>
+  <span>Change table page size: </span>
+  <select #paginationSelect (change)="onPageSizeChanged($event)">
+    <option [value]="10">10</option>
+    <option [value]="20">20</option>
+    <option [value]="50">50</option>
+    <option [value]="100">100</option>
+  </select>
+</div>
+<br/>
+<button (click)="resetGridFilters()"> Reset Filters </button>
+<br/><br/>
+
+<ag-grid-angular
+  style="width: 100%; height: 500px"
+  class="ag-theme-alpine"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [gridOptions]="gridOptions"
+  (gridReady)="onGridReady($event)">
+</ag-grid-angular>
+
