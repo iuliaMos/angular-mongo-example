@@ -6,16 +6,16 @@ import helsinki.citybike.services.JourneyService;
 import helsinki.citybike.services.StationService;
 import helsinki.citybike.specifications.filter.JourneySearchCriteria;
 import helsinki.citybike.specifications.filter.StationSearchCriteria;
+import helsinki.citybike.util.GenericGridDTO;
+import helsinki.citybike.util.GridParamsDTO;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
+@Slf4j
 public class MainController {
 
     private StationService stationService;
@@ -26,19 +26,17 @@ public class MainController {
         return "Greetings";
     }
 
-    @GetMapping("/stations")
+    @PostMapping(value = "/stations", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<HSLStation> getStations(@RequestParam(defaultValue = "0") Integer page,
-                                        @RequestParam(defaultValue = "10") Integer size,
-                                        final StationSearchCriteria searchCriteria) {
-        return stationService.getAll(page, size, searchCriteria);
+    public GenericGridDTO<HSLStation> getStations(@RequestBody GridParamsDTO<StationSearchCriteria> gridParams) {
+        log.info("filter: {}, sort: {}", gridParams.getFilterModel(), gridParams.getSortModel());
+        return stationService.getAll(gridParams);
     }
 
-    @GetMapping("/journeys")
+    @PostMapping(value = "/journeys", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<HSLJourney> getJourneys(@RequestParam(defaultValue = "0") Integer page,
-                                        @RequestParam(defaultValue = "10") Integer size,
-                                        final JourneySearchCriteria searchCriteria) {
-        return journeyService.getAll(page, size, searchCriteria);
+    public GenericGridDTO<HSLJourney> getJourneys(@RequestBody GridParamsDTO<JourneySearchCriteria> gridParams) {
+        log.info("filter: {}, sort: {}", gridParams.getFilterModel(), gridParams.getSortModel());
+        return journeyService.getAll(gridParams);
     }
 }

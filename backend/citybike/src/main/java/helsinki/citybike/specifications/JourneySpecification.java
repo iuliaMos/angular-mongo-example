@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static helsinki.citybike.StringConversionUtils.likeString;
+import static helsinki.citybike.util.StringConversionUtils.likeString;
 
 public final class JourneySpecification {
 
@@ -28,35 +28,37 @@ public final class JourneySpecification {
 
         Optional.ofNullable(searchCriteria.getDepartureStationId()).ifPresent(str -> {
             StringPath stringPath = entityPath.getString("departureStationId");
-            predicateList.add(stringPath.like(likeString(str)));
+            predicateList.add(stringPath.likeIgnoreCase(likeString(str.getFilter())));
         });
         Optional.ofNullable(searchCriteria.getDepartureStationName()).ifPresent(str -> {
             StringPath stringPath = entityPath.getString("departureStationName");
-            predicateList.add(stringPath.like(likeString(str)));
+            predicateList.add(stringPath.likeIgnoreCase(likeString(str.getFilter())));
         });
         Optional.ofNullable(searchCriteria.getReturnStationId()).ifPresent(str -> {
             StringPath stringPath = entityPath.getString("returnStationId");
-            predicateList.add(stringPath.like(likeString(str)));
+            predicateList.add(stringPath.likeIgnoreCase(likeString(str.getFilter())));
         });
         Optional.ofNullable(searchCriteria.getReturnStationName()).ifPresent(str -> {
             StringPath stringPath = entityPath.getString("returnStationName");
-            predicateList.add(stringPath.like(likeString(str)));
+            predicateList.add(stringPath.likeIgnoreCase(likeString(str.getFilter())));
         });
         Optional.ofNullable(searchCriteria.getDistance()).ifPresent(distance -> {
             NumberPath<Double> path = entityPath.getNumber("distance", Double.TYPE);
-            predicateList.add(path.eq(distance));
+            predicateList.add(path.eq(Double.parseDouble(distance.getFilter())));
         });
         Optional.ofNullable(searchCriteria.getDuration()).ifPresent(duration -> {
             NumberPath<Long> path = entityPath.getNumber("duration", Long.TYPE);
-            predicateList.add(path.eq(duration));
+            predicateList.add(path.eq(Long.parseLong(duration.getFilter())));
         });
         Optional.ofNullable(searchCriteria.getDepartureTime()).ifPresent(date -> {
             DateTimePath<LocalDateTime> path = entityPath.getDateTime("departureTime", LocalDateTime.class);
-            predicateList.add(path.between(date.atStartOfDay(), date.atTime(LocalTime.MAX)));
+            predicateList.add(path.between(date.getDateFrom().withHour(0).withMinute(0).withSecond(0),
+                    date.getDateTo().withHour(23).withMinute(59).withSecond(59)));
         });
         Optional.ofNullable(searchCriteria.getReturnTime()).ifPresent(date -> {
             DateTimePath<LocalDateTime> path = entityPath.getDateTime("returnTime", LocalDateTime.class);
-            predicateList.add(path.between(date.atStartOfDay(), date.atTime(LocalTime.MAX)));
+            predicateList.add(path.between(date.getDateFrom().withHour(0).withMinute(0).withSecond(0),
+                    date.getDateTo().withHour(23).withMinute(59).withSecond(59)));
         });
         return predicateList.isEmpty() ? Optional.empty() : Optional.of(ExpressionUtils.allOf(predicateList));
     }

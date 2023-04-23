@@ -1,4 +1,4 @@
-package helsinki.citybike;
+package helsinki.citybike.util;
 
 import org.springframework.util.StringUtils;
 

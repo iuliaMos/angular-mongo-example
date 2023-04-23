@@ -1,4 +1,4 @@
-package helsinki.citybike;
+package helsinki.citybike.context;
 
 import com.opencsv.CSVReader;
 import helsinki.citybike.entities.HSLJourney;
@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 
-import static helsinki.citybike.StringConversionUtils.*;
+import static helsinki.citybike.util.StringConversionUtils.*;
 
 @Component
 @Data
@@ -42,7 +42,7 @@ public class ImportDataOnStartupListener implements ApplicationListener<ContextR
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         try {
-            downloadJourneys();
+            //downloadJourneys();
             importStations();
             importJourneys();
         } catch (IOException e) {
