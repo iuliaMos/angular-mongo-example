@@ -65,7 +65,6 @@ export class StationComponent implements OnInit {
       getRows: (params: IGetRowsParams) => {
         const size = this.gridOptions.paginationPageSize ? this.gridOptions.paginationPageSize : 10;
         const page = (params.startRow / size) | 0;
-        console.log(params);
         this.appService.getStations(params, page, size);
       }
     }
