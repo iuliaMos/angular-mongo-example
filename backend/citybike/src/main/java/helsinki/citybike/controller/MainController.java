@@ -47,4 +47,16 @@ public class MainController {
     public List<StationMapMarkerDTO> getStationsGeo() {
         return stationService.getStationsGeo();
     }
+
+    @GetMapping("/top5Depart")
+    public List<HSLJourney> getTop5Depart(@RequestParam("stationId") String stationId) {
+        return journeyService.top5Departure(stationService.findByExternalId(stationId));
+    }
+
+    @GetMapping("/top5Ret")
+    public List<HSLJourney> getTop5Ret(@RequestParam("stationId") String stationId) {
+       // String departId = "116";
+       // String returnId= "232";
+       return journeyService.top5Return(stationService.findByExternalId(stationId));
+    }
 }

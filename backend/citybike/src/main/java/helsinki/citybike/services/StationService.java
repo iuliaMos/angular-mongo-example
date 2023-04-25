@@ -43,4 +43,8 @@ public class StationService {
                 .map(entity -> new StationMapMarkerDTO(entity.getX(), entity.getY(), entity.getNameEn()))
                 .collect(Collectors.toList());
     }
+
+    public HSLStation findByExternalId(String stationId) {
+        return stationRepository.findByExternalId(stationId).orElse(new HSLStation());
+    }
 }
