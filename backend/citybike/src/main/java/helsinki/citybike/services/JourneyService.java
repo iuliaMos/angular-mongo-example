@@ -1,6 +1,7 @@
 package helsinki.citybike.services;
 
 import com.querydsl.core.types.Predicate;
+import helsinki.citybike.dto.AvgDistanceDTO;
 import helsinki.citybike.dto.GenericGridDTO;
 import helsinki.citybike.dto.GridParamsDTO;
 import helsinki.citybike.entities.HSLJourney;
@@ -50,10 +51,9 @@ public class JourneyService {
         SortOperation sortByCount = sort(Sort.Direction.DESC, "departCount");
         MatchOperation filter = match(Criteria.where("_id.departureStationId").is(station.getExternalId()));
         LimitOperation limit = limit(5);
-        ProjectionOperation projectionOperation = project("objId");
         ReplaceRootOperation replaceRootOperation = replaceRoot("$objId");
 
-        Aggregation aggregation = newAggregation(countReturns, filter, sortByCount, limit, projectionOperation, replaceRootOperation);
+        Aggregation aggregation = newAggregation(countReturns, filter, sortByCount, limit, replaceRootOperation);
 
         AggregationResults<HSLJourney> result = mongoTemplate
                 .aggregate(aggregation, mongoTemplate.getCollectionName(HSLJourney.class), HSLJourney.class);
@@ -66,13 +66,38 @@ public class JourneyService {
         SortOperation sortByCount = sort(Sort.Direction.DESC, "returnCount");
         MatchOperation filter = match(Criteria.where("_id.returnStationId").is(station.getExternalId()));
         LimitOperation limit = limit(5);
-        ProjectionOperation projectionOperation = project("objId");
         ReplaceRootOperation replaceRootOperation = replaceRoot("$objId");
 
-        Aggregation aggregation = newAggregation(countReturns, filter, sortByCount, limit, projectionOperation, replaceRootOperation);
+        Aggregation aggregation = newAggregation(countReturns, filter, sortByCount, limit, replaceRootOperation);
 
         AggregationResults<HSLJourney> result = mongoTemplate
                 .aggregate(aggregation, mongoTemplate.getCollectionName(HSLJourney.class), HSLJourney.class);
         return result.getMappedResults();
+    }
+
+    public Double avgDeparture(final HSLStation station) {
+        MatchOperation filter = match(Criteria.where("departureStationId").is(station.getExternalId()));
+        GroupOperation avgDistance = group("departureStationId").avg("$distance").as("avgDistance");
+        Aggregation aggregation = newAggregation(filter, avgDistance);
+
+        AggregationResults<AvgDistanceDTO> result = mongoTemplate
+                .aggregate(aggregation, mongoTemplate.getCollectionName(HSLJourney.class), AvgDistanceDTO.class);
+        AvgDistanceDTO avg = result.getUniqueMappedResult();
+        return Optional.ofNullable(avg).map(AvgDistanceDTO::getAvgDistance).orElse(0d);
+    }
+
+    public Double avgReturn(final HSLStation station) {
+        MatchOperation filter = match(Criteria.where("returnStationId").is(station.getExternalId()));
+        GroupOperation avgDistance = group("returnStationId").avg("$distance").as("avgDistance");
+        Aggregation aggregation = newAggregation(filter, avgDistance);
+
+        AggregationResults<AvgDistanceDTO> result = mongoTemplate
+                .aggregate(aggregation, mongoTemplate.getCollectionName(HSLJourney.class), AvgDistanceDTO.class);
+        AvgDistanceDTO avg = result.getUniqueMappedResult();
+        return Optional.ofNullable(avg).map(AvgDistanceDTO::getAvgDistance).orElse(0d);
+    }
+
+    public void save(HSLJourney entity) {
+        journeyRepository.save(entity);
     }
 }

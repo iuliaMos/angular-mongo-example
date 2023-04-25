@@ -47,4 +47,8 @@ public class StationService {
     public HSLStation findByExternalId(String stationId) {
         return stationRepository.findByExternalId(stationId).orElse(new HSLStation());
     }
+
+    public void save(HSLStation entity) {
+        stationRepository.save(entity);
+    }
 }

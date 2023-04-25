@@ -55,8 +55,12 @@ public class MainController {
 
     @GetMapping("/top5Ret")
     public List<HSLJourney> getTop5Ret(@RequestParam("stationId") String stationId) {
-       // String departId = "116";
-       // String returnId= "232";
        return journeyService.top5Return(stationService.findByExternalId(stationId));
+    }
+
+    @GetMapping("/avgDistance")
+    public void avgDistance(@RequestParam("stationId") String stationId) {
+        log.info("depart: {}", journeyService.avgDeparture(stationService.findByExternalId(stationId)));
+        log.info("return: {}", journeyService.avgReturn(stationService.findByExternalId(stationId)));
     }
 }

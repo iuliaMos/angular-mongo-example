@@ -3,8 +3,8 @@ package helsinki.citybike.context;
 import com.opencsv.CSVReader;
 import helsinki.citybike.entities.HSLJourney;
 import helsinki.citybike.entities.HSLStation;
-import helsinki.citybike.repository.HSLJourneyRepository;
-import helsinki.citybike.repository.HSLStationRepository;
+import helsinki.citybike.services.JourneyService;
+import helsinki.citybike.services.StationService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -29,9 +29,9 @@ import static helsinki.citybike.util.StringConversionUtils.*;
 public class ImportDataOnStartupListener implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
-    private HSLStationRepository hslStationRepository;
+    private StationService stationService;
     @Autowired
-    private HSLJourneyRepository hslJourneyRepository;
+    private JourneyService journeyService;
     @Value("${app.journey.download.path}")
     private String journeyDownloadPath;
     @Value("${app.journey.urls}")
@@ -63,10 +63,10 @@ public class ImportDataOnStartupListener implements ApplicationListener<ContextR
             String[] line;
             csvReader.readNext(); // read header
             while ((line = csvReader.readNext()) != null) {
-                hslStationRepository.save(createNewStationEntity(line));
+                stationService.save(createNewStationEntity(line));
             }
         }
-        log.info("No of imported stations: {}", hslStationRepository.count());
+        log.info("End imported stations");
     }
 
     private HSLStation createNewStationEntity(String[] line) {
@@ -97,12 +97,12 @@ public class ImportDataOnStartupListener implements ApplicationListener<ContextR
                     if (validateMinDistanceAndDuration(line)) {
                         continue;
                     }
-                    hslJourneyRepository.save(createNewJourneyEntity(line));
+                    journeyService.save(createNewJourneyEntity(line));
                 }
             }
         }
 
-        log.info("No of imported journeys: {}", hslJourneyRepository.count());
+        log.info("End imported journeys");
     }
 
     private boolean validateMinDistanceAndDuration(String[] line) {
