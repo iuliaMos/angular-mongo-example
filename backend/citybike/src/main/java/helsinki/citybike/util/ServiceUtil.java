@@ -1,5 +1,6 @@
 package helsinki.citybike.util;
 
+import helsinki.citybike.dto.GridParamsDTO;
 import helsinki.citybike.specifications.GridSortModel;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

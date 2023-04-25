@@ -1,4 +1,4 @@
-package helsinki.citybike.util;
+package helsinki.citybike.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

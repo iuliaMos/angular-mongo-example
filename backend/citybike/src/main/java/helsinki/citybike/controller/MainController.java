@@ -1,17 +1,20 @@
 package helsinki.citybike.controller;
 
+import helsinki.citybike.dto.GenericGridDTO;
+import helsinki.citybike.dto.GridParamsDTO;
+import helsinki.citybike.dto.StationMapMarkerDTO;
 import helsinki.citybike.entities.HSLJourney;
 import helsinki.citybike.entities.HSLStation;
 import helsinki.citybike.services.JourneyService;
 import helsinki.citybike.services.StationService;
 import helsinki.citybike.specifications.filter.JourneySearchCriteria;
 import helsinki.citybike.specifications.filter.StationSearchCriteria;
-import helsinki.citybike.util.GenericGridDTO;
-import helsinki.citybike.util.GridParamsDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -38,5 +41,10 @@ public class MainController {
     public GenericGridDTO<HSLJourney> getJourneys(@RequestBody GridParamsDTO<JourneySearchCriteria> gridParams) {
         log.info("filter: {}, sort: {}", gridParams.getFilterModel(), gridParams.getSortModel());
         return journeyService.getAll(gridParams);
+    }
+
+    @GetMapping("/stationsGeo")
+    public List<StationMapMarkerDTO> getStationsGeo() {
+        return stationService.getStationsGeo();
     }
 }

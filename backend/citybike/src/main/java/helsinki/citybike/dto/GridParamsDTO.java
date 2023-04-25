@@ -1,4 +1,4 @@
-package helsinki.citybike.util;
+package helsinki.citybike.dto;
 
 import helsinki.citybike.specifications.GridSortModel;
 import lombok.AllArgsConstructor;
