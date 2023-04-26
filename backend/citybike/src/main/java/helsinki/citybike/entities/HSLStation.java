@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -25,7 +26,7 @@ public class HSLStation {
     private String id;
 
     private Long nr;
-    @NotNull
+    @NotBlank
     private String externalId;
     @NotNull
     private String nameFi;

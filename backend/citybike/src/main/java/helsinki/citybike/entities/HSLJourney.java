@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -31,12 +32,14 @@ public class HSLJourney {
     @NotNull
     private LocalDateTime returnTime;
 
+    @NotBlank
     private String departureStationId;
-    @NotNull
+    @NotBlank
     private String departureStationName;
 
+    @NotBlank
     private String returnStationId;
-    @NotNull
+    @NotBlank
     private String returnStationName;
 
     @NotNull

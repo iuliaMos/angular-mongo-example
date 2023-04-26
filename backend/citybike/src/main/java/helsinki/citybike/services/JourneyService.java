@@ -1,6 +1,8 @@
 package helsinki.citybike.services;
 
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.core.types.dsl.StringPath;
 import helsinki.citybike.dto.AvgDistanceDTO;
 import helsinki.citybike.dto.GenericGridDTO;
 import helsinki.citybike.dto.GridParamsDTO;
@@ -99,5 +101,15 @@ public class JourneyService {
 
     public void save(HSLJourney entity) {
         journeyRepository.save(entity);
+    }
+
+    public List<String> countJourneysByStation(final String externalId) {
+        PathBuilder<HSLJourney> entityPath = new PathBuilder<>(HSLJourney.class, "HSLJourney");
+        StringPath pathDepart = entityPath.getString("departureStationId");
+        long countDepart = journeyRepository.count(pathDepart.equalsIgnoreCase(externalId));
+        StringPath pathRet = entityPath.getString("returnStationId");
+        long countRet = journeyRepository.count(pathRet.equalsIgnoreCase(externalId));
+        return List.of(String.format("Total number of journeys starting from the station: %s", countDepart),
+                String.format("Total number of journeys ending at the station: %s", countRet));
     }
 }
