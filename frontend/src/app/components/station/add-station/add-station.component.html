@@ -1,4 +1,72 @@
-<h1> Add new Station</h1>
-<div mat-dialog-content>
+<h3> Add new Station</h3>
+<div mat-dialog-content class="form">
+  <form [formGroup]="stationForm">
 
+    <div class="row">
+      <label for="nr" class="col">Nr: </label>
+      <input id="nr" type="number" formControlName="nr" class="col">
+    </div>
+
+    <div class="row">
+      <label for="externalId" class="col">ExternalId: </label>
+      <input id="externalId" type="text" formControlName="externalId" class="col" required>
+    </div>
+
+    <div class="row">
+      <label for="nameFi" class="col">NameFi: </label>
+      <input id="nameFi" type="text" formControlName="nameFi" class="col" required>
+    </div>
+
+    <div class="row">
+      <label for="nameSe" class="col">NameSe: </label>
+      <input id="nameSe" type="text" formControlName="nameSe" class="col">
+    </div>
+
+    <div class="row">
+      <label for="nameEn" class="col">NameEn: </label>
+      <input id="nameEn" type="text" formControlName="nameEn" class="col" required>
+    </div>
+
+    <div class="row">
+      <label for="addressFi" class="col">AddressFi: </label>
+      <input id="addressFi" type="text" formControlName="addressFi" class="col" required>
+    </div>
+
+    <div class="row">
+      <label for="addressSe" class="col">AddressSe: </label>
+      <input id="addressSe" type="text" formControlName="addressSe" class="col">
+    </div>
+
+    <div class="row">
+      <label for="cityFi" class="col">CityFi: </label>
+      <input id="cityFi" type="text" formControlName="cityFi" class="col">
+    </div>
+
+    <div class="row">
+      <label for="citySe" class="col">CitySe: </label>
+      <input id="citySe" type="text" formControlName="citySe" class="col">
+    </div>
+
+    <div class="row">
+      <label for="operator" class="col">Operator: </label>
+      <input id="operator" type="text" formControlName="operator" class="col">
+    </div>
+
+    <div class="row">
+      <label for="capacities" class="col">Capacities: </label>
+      <input id="capacities" type="number" formControlName="capacities" class="col">
+    </div>
+
+    <div class="row">
+      <label for="x" class="col">Long: </label>
+      <input id="x" type="number" formControlName="x" class="col" required>
+    </div>
+
+    <div class="row">
+      <label for="y" class="col">Lat: </label>
+      <input id="y" type="number" formControlName="y" class="col" required>
+    </div>
+
+    <button type="submit" [disabled]="!stationForm.valid" (click)="onSubmit()" >Submit</button>
+  </form>
 </div>

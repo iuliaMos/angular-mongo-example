@@ -85,10 +85,9 @@ export class StationComponent implements OnInit {
   }
 
   addNewStation() {
-    this.dialog.open(AddStationComponent, {
-      data: {
-        animal: 'new station',
-      },
+    this.dialog.open(AddStationComponent);
+    this.dialog.afterAllClosed.subscribe(result => {
+      this.gridApi.refreshInfiniteCache();
     });
   }
 }

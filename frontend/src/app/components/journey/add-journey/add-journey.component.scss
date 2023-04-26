@@ -1,0 +1,15 @@
+.form {
+  width: 500px;
+  min-height: 100%;
+}
+
+.col {
+  float: left;
+  width: 45%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

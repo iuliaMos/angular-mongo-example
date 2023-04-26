@@ -106,10 +106,9 @@ export class JourneyComponent implements OnInit {
   }
 
   addNewJourney() {
-    this.dialog.open(AddJourneyComponent, {
-      data: {
-        animal: 'new journey',
-      },
+    this.dialog.open(AddJourneyComponent);
+    this.dialog.afterAllClosed.subscribe(result => {
+      this.gridApi.refreshInfiniteCache();
     });
   }
 }

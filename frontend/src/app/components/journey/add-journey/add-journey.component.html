@@ -1,1 +1,48 @@
-<p>add-journey works!</p>
+<h3> Add new Journey</h3>
+<div mat-dialog-content class="form">
+  <form [formGroup]="journeyForm">
+
+    <div class="row">
+      <label for="departureTime" class="col">DepartureTime: </label>
+      <input id="departureTime" type="datetime-local" formControlName="departureTime" class="col" required>
+    </div>
+
+    <div class="row">
+      <label for="returnTime" class="col">ReturnTime: </label>
+      <input id="returnTime" type="datetime-local" formControlName="returnTime" class="col" required>
+    </div>
+
+    <div class="row">
+      <label for="departureStationId" class="col">DepartureStationId: </label>
+      <input id="departureStationId" type="text" formControlName="departureStationId" class="col" required>
+    </div>
+
+    <div class="row">
+      <label for="departureStationName" class="col">DepartureStationName: </label>
+      <input id="departureStationName" type="text" formControlName="departureStationName" class="col">
+    </div>
+
+    <div class="row">
+      <label for="returnStationId" class="col">ReturnStationId: </label>
+      <input id="returnStationId" type="text" formControlName="returnStationId" class="col" required>
+    </div>
+
+    <div class="row">
+      <label for="returnStationName" class="col">ReturnStationName: </label>
+      <input id="returnStationName" type="text" formControlName="returnStationName" class="col">
+    </div>
+
+    <div class="row">
+      <label for="distance" class="col">Distance: </label>
+      <input id="distance" type="number" formControlName="distance" class="col" required>
+    </div>
+
+    <div class="row">
+      <label for="duration" class="col">Duration: </label>
+      <input id="duration" type="number" formControlName="duration" class="col" required>
+    </div>
+
+
+    <button type="submit" [disabled]="!journeyForm.valid" (click)="onSubmit()" >Submit</button>
+  </form>
+</div>

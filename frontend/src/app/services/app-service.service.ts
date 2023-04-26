@@ -84,4 +84,14 @@ export class AppServiceService {
         catchError(() => of([]))
       );
   }
+
+  saveStation(station: Station) {
+    this.http.post<void>("http://localhost:8080/savestation", station).subscribe(data => {
+    });
+  }
+
+  saveJourney(journey: Journey) {
+    this.http.post<void>("http://localhost:8080/savejourney", journey).subscribe(data => {
+    });
+  }
 }

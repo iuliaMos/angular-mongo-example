@@ -1,0 +1,16 @@
+.form {
+  width: 400px;
+  min-height: 100%;
+}
+
+.col {
+  float: left;
+  width: 40%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
