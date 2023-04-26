@@ -3,6 +3,8 @@ import {ActivatedRoute} from "@angular/router";
 import {AppServiceService} from "../../services/app-service.service";
 import {ColDef, GridApi, GridOptions, IGetRowsParams} from "ag-grid-community";
 import {formatDate} from "@angular/common";
+import {MatDialog} from "@angular/material/dialog";
+import {AddJourneyComponent} from "./add-journey/add-journey.component";
 
 @Component({
   selector: 'app-journey',
@@ -12,7 +14,7 @@ import {formatDate} from "@angular/common";
 export class JourneyComponent implements OnInit {
   private gridApi!: GridApi;
 
-  constructor(private route: ActivatedRoute, private appService: AppServiceService) {
+  constructor(private route: ActivatedRoute, private appService: AppServiceService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -103,4 +105,11 @@ export class JourneyComponent implements OnInit {
     return formatDate(new Date(date[0], date[1] - 1, date[2], date[3], date[4], date[5]), 'yyyy-MM-dd hh:mm:ss', 'en-GB');
   }
 
+  addNewJourney() {
+    this.dialog.open(AddJourneyComponent, {
+      data: {
+        animal: 'new journey',
+      },
+    });
+  }
 }

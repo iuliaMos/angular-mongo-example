@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ColDef, GridApi, GridOptions, IGetRowsParams} from "ag-grid-community";
 import {ActivatedRoute} from "@angular/router";
 import {AppServiceService} from "../../services/app-service.service";
+import {InfoCellRenderComponent} from "./info-cell-render/info-cell-render.component";
+import {MatDialog} from "@angular/material/dialog";
+import {AddStationComponent} from "./add-station/add-station.component";
 
 @Component({
   selector: 'app-station',
@@ -11,13 +14,14 @@ import {AppServiceService} from "../../services/app-service.service";
 export class StationComponent implements OnInit {
   private gridApi!: GridApi;
 
-  constructor(private route: ActivatedRoute, private appService: AppServiceService) {
+  constructor(private route: ActivatedRoute, private appService: AppServiceService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
   }
 
   columnDefs: ColDef[] = [
+    {headerName: 'Info', width: 50, cellRenderer: InfoCellRenderComponent},
     {headerName: 'ExternalId', field: 'externalId'},
     {headerName: 'NameEn', field: 'nameEn'},
     {headerName: 'NameFi', field: 'nameFi'},
@@ -74,5 +78,13 @@ export class StationComponent implements OnInit {
   resetGridFilters() {
     this.gridApi.setFilterModel({});
     this.gridApi.refreshInfiniteCache();
+  }
+
+  addNewStation() {
+    this.dialog.open(AddStationComponent, {
+      data: {
+        animal: 'new station',
+      },
+    });
   }
 }

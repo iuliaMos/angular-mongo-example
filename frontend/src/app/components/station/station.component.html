@@ -11,8 +11,12 @@
   </select>
 </div>
 <br/>
-<button (click)="resetGridFilters()"> Reset Filters </button>
-<br/><br/>
+<div class="row">
+  <button  mat-raised-button color="primary"  class="column" (click)="resetGridFilters()"> Reset Filters </button>
+  <button  mat-raised-button color="primary"  class="column"  (click)="addNewStation()"> Add new Station </button>
+</div>
+
+<br/>
 
 <ag-grid-angular
   style="width: 100%; height: 500px"

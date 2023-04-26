@@ -14,6 +14,10 @@ import {StationComponent} from './components/station/station.component';
 import {JourneyComponent} from './components/journey/journey.component';
 import {HomeComponent} from './components/home/home.component';
 import {RouterModule, Routes} from "@angular/router";
+import { InfoCellRenderComponent } from './components/station/info-cell-render/info-cell-render.component';
+import { DialogInfoStationComponent } from './components/station/info-cell-render/dialog-info-station/dialog-info-station.component';
+import { AddStationComponent } from './components/station/add-station/add-station.component';
+import { AddJourneyComponent } from './components/journey/add-journey/add-journey.component';
 
 export const routes: Routes = [
   {path: '', component: HomeComponent, title: 'Home'},
@@ -27,7 +31,11 @@ export const routes: Routes = [
     AppComponent,
     StationComponent,
     JourneyComponent,
-    HomeComponent
+    HomeComponent,
+    InfoCellRenderComponent,
+    DialogInfoStationComponent,
+    AddStationComponent,
+    AddJourneyComponent
   ],
   imports: [
     BrowserModule,
