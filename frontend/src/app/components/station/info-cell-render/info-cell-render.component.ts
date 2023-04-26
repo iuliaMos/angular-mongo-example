@@ -3,6 +3,7 @@ import {ICellRendererAngularComp} from "ag-grid-angular";
 import {ICellRendererParams} from "ag-grid-community";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogInfoStationComponent} from "./dialog-info-station/dialog-info-station.component";
+import {Station} from "../../../models/station";
 
 @Component({
   selector: 'app-info-cell-render',
@@ -11,10 +12,13 @@ import {DialogInfoStationComponent} from "./dialog-info-station/dialog-info-stat
 })
 export class InfoCellRenderComponent implements ICellRendererAngularComp {
 
+  station?: Station;
+
   constructor(public dialog: MatDialog) {
   }
 
   agInit(params: ICellRendererParams): void {
+    this.station = params.value;
   }
 
   refresh(params: ICellRendererParams<any>): boolean {
@@ -23,9 +27,7 @@ export class InfoCellRenderComponent implements ICellRendererAngularComp {
 
   onClickHandler() {
     this.dialog.open(DialogInfoStationComponent, {
-      data: {
-        animal: 'panda',
-      },
+      data: this.station
     });
   }
 

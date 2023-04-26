@@ -16,24 +16,32 @@ export class AppServiceService {
   }
 
   getStations(params: IGetRowsParams, page: number, size: number) {
+    let emptyValue: GenericGrid<Station>;
     this.http.post<GenericGrid<Station>>("http://localhost:8080/stations", {
       page: page,
       size: size,
       sortModel: params.sortModel,
       filterModel: params.filterModel
     })
+      .pipe(
+        catchError(() => of(emptyValue))
+      )
       .subscribe(data => {
         params.successCallback(data.records, data.totalRecords);
       });
   }
 
   getJourneys(params: IGetRowsParams, page: number, size: number) {
+    let emptyValue: GenericGrid<Journey>;
     this.http.post<GenericGrid<Journey>>("http://localhost:8080/journeys", {
       page: page,
       size: size,
       sortModel: params.sortModel,
       filterModel: params.filterModel
     })
+      .pipe(
+        catchError(() => of(emptyValue))
+      )
       .subscribe(data => {
         params.successCallback(data.records, data.totalRecords);
       });
@@ -45,6 +53,35 @@ export class AppServiceService {
       .pipe(
         map((data: StationMarker[]) => data),
         catchError(() => of(stationsGeo))
+      );
+  }
+
+  getJourneysTopDepart(params: IGetRowsParams, station: string) {
+    let emptyValue: Journey[];
+    this.http.get<Journey[]>("http://localhost:8080/top5Depart", {params: {stationId: station}})
+      .pipe(
+        catchError(() => of(emptyValue))
+      )
+      .subscribe(data => {
+        params.successCallback(data, data.length);
+      });
+  }
+
+  getJourneysTopReturn(params: IGetRowsParams, station: string) {
+    let emptyValue: Journey[];
+    this.http.get<Journey[]>("http://localhost:8080/top5Ret", {params: {stationId: station}})
+      .pipe(
+        catchError(() => of(emptyValue))
+      )
+      .subscribe(data => {
+        params.successCallback(data, data.length);
+      });
+  }
+
+  getJourneysAvg(station: string): Observable<string[]> {
+    return this.http.get<string[]>("http://localhost:8080/avgDistance", {params: {stationId: station}})
+      .pipe(
+        catchError(() => of([]))
       );
   }
 }

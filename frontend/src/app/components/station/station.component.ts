@@ -21,7 +21,11 @@ export class StationComponent implements OnInit {
   }
 
   columnDefs: ColDef[] = [
-    {headerName: 'Info', width: 50, cellRenderer: InfoCellRenderComponent},
+    {
+      headerName: 'Info', width: 50,
+      cellRenderer: InfoCellRenderComponent,
+      valueGetter: params => params.data
+    },
     {headerName: 'ExternalId', field: 'externalId'},
     {headerName: 'NameEn', field: 'nameEn'},
     {headerName: 'NameFi', field: 'nameFi'},

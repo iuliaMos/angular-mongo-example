@@ -18,6 +18,8 @@ import { InfoCellRenderComponent } from './components/station/info-cell-render/i
 import { DialogInfoStationComponent } from './components/station/info-cell-render/dialog-info-station/dialog-info-station.component';
 import { AddStationComponent } from './components/station/add-station/add-station.component';
 import { AddJourneyComponent } from './components/journey/add-journey/add-journey.component';
+import { MapStationComponent } from './components/station/info-cell-render/dialog-info-station/map-station/map-station.component';
+import { JourneysComponent } from './components/station/info-cell-render/dialog-info-station/journeys/journeys.component';
 
 export const routes: Routes = [
   {path: '', component: HomeComponent, title: 'Home'},
@@ -35,7 +37,9 @@ export const routes: Routes = [
     InfoCellRenderComponent,
     DialogInfoStationComponent,
     AddStationComponent,
-    AddJourneyComponent
+    AddJourneyComponent,
+    MapStationComponent,
+    JourneysComponent
   ],
   imports: [
     BrowserModule,

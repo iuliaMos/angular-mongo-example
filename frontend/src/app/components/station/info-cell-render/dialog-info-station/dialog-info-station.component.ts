@@ -1,14 +1,25 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {Station} from "../../../../models/station";
+import {AppServiceService} from "../../../../services/app-service.service";
 
 @Component({
   selector: 'app-dialog-info-station',
   templateUrl: './dialog-info-station.component.html',
   styleUrls: ['./dialog-info-station.component.scss']
 })
-export class DialogInfoStationComponent {
+export class DialogInfoStationComponent implements OnInit {
+  station: Station = {} as Station;
+  avgDistance: string = "";
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(data);
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Station, private appService: AppServiceService) {
+    this.station = data;
+    this.appService.getJourneysAvg(this.station.externalId)
+      .subscribe(data => {
+        this.avgDistance = data? data[0]: "";
+      });
+  }
+
+  ngOnInit(): void {
   }
 }
