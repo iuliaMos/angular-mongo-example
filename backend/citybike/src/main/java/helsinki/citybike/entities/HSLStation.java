@@ -3,6 +3,8 @@ package helsinki.citybike.entities;
 import com.querydsl.core.annotations.QueryEntity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
@@ -14,12 +16,16 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Document
 @ToString
+@CompoundIndexes({
+        @CompoundIndex(name = "externalId", def = "{'externalId' : 1}", unique = true)
+})
 public class HSLStation {
 
     @Id
     private String id;
 
     private Long nr;
+    @NotNull
     private String externalId;
     @NotNull
     private String nameFi;

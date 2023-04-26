@@ -59,8 +59,9 @@ public class MainController {
     }
 
     @GetMapping("/avgDistance")
-    public void avgDistance(@RequestParam("stationId") String stationId) {
-        log.info("depart: {}", journeyService.avgDeparture(stationService.findByExternalId(stationId)));
-        log.info("return: {}", journeyService.avgReturn(stationService.findByExternalId(stationId)));
+    public List<String> avgDistance(@RequestParam("stationId") String stationId) {
+        String departureAvg = String.valueOf(journeyService.avgDeparture(stationService.findByExternalId(stationId)));
+        String returnAvg = String.valueOf(journeyService.avgReturn(stationService.findByExternalId(stationId)));
+        return List.of("Departure avg: " + departureAvg + ", Return avg: " + returnAvg);
     }
 }
