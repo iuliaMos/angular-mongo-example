@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    networks:
+      - city-bicke-network
+    command: ["--bind_ip", "0.0.0.0"]
+  backend:
+    build: 
+      context: backend/citybike/
+    image: backend
+    depends_on:
+      - mongo
+    networks:
+      - city-bicke-network
+    ports:
+      - 8181:8181
+  
+  frontend:
+    build:
+      context: frontend/
+    image: frontend
+    networks:
+      - city-bicke-network
+    depends_on:
+      - backend
+    ports:
+      - 8282:80
+
+networks:
+  city-bicke-network:
+    driver: bridge

@@ -37,20 +37,35 @@ public class ImportDataOnStartupListener implements ApplicationListener<ContextR
     @Value("${app.journey.urls}")
     private String[] journeyUrls;
 
+    @Value("${app.journey.filesnames}")
+    private String[] journeyFilesNames;
 
-    //No of imported journeys: 3128758
+
+    //No of imported journeys in 3 files: 3128758, each file contains around 1000000
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         try {
-            //downloadJourneys();
-            importStations();
-            importJourneys();
+            File dir = new File(journeyDownloadPath);
+            if (dir.exists()) {
+                FileUtils.deleteDirectory(dir);
+            }
+            dir.mkdir();
+            downloadJourneys();
+            if (importStations()) {
+                importJourneys();
+            } else {
+                log.info("End imported journeys: 0");
+            }
         } catch (IOException e) {
             log.error("Error on importing data", e);
         }
     }
 
     private void downloadJourneys() throws IOException {
+        if (journeyUrls == null) {
+            log.info("No URL defined for importing journey");
+            return;
+        }
         for (String url : journeyUrls) {
             String name = url.substring(url.lastIndexOf("/") + 1);
             File file = ResourceUtils.getFile(journeyDownloadPath + name);
@@ -58,15 +73,20 @@ public class ImportDataOnStartupListener implements ApplicationListener<ContextR
         }
     }
 
-    private void importStations() throws IOException {
-        try (CSVReader csvReader = new CSVReader(new FileReader(ResourceUtils.getFile(journeyDownloadPath + "Helsingin_ja_Espoon_kaupunkipyB6rA4asemat_avoin.csv")))) {
+    private boolean importStations() throws IOException {
+        try (CSVReader csvReader = new CSVReader(new FileReader(ResourceUtils.getFile(journeyDownloadPath + "726277c507ef4914b0aec3cbcfcbfafc_0.csv")))) {
             String[] line;
             csvReader.readNext(); // read header
             while ((line = csvReader.readNext()) != null) {
-                stationService.save(createNewStationEntity(line));
+                try {
+                    stationService.save(createNewStationEntity(line));
+                } catch (Exception e) {
+                    return false;
+                }
             }
         }
         log.info("End imported stations");
+        return true;
     }
 
     private StationDTO createNewStationEntity(String[] line) {
@@ -88,8 +108,11 @@ public class ImportDataOnStartupListener implements ApplicationListener<ContextR
     }
 
     private void importJourneys() throws IOException {
-        String[] files = {"2021-04.csv"};//{"2021-05.csv", "2021-06.csv", "2021-07.csv"};
-        for (String file : files) {
+        if (journeyUrls == null) {
+            log.info("End imported journeys: 0");
+            return;
+        }
+        for (String file : journeyFilesNames) {
             try (CSVReader csvReader = new CSVReader(new FileReader(ResourceUtils.getFile(journeyDownloadPath + file)))) {
                 String[] line;
                 csvReader.readNext(); // read header

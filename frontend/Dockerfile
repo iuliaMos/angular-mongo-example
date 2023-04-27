@@ -8,6 +8,5 @@ RUN npm run build
 
 FROM nginx:1.23.4-alpine
 COPY --from=build /app/dist/frontend /usr/share/nginx/html
-EXPOSE 80
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 

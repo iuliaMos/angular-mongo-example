@@ -17,7 +17,7 @@ export class AppServiceService {
 
   getStations(params: IGetRowsParams, page: number, size: number) {
     let emptyValue: GenericGrid<Station>;
-    this.http.post<GenericGrid<Station>>("http://localhost:8080/stations", {
+    this.http.post<GenericGrid<Station>>("http://localhost:8181/stations", {
       page: page,
       size: size,
       sortModel: params.sortModel,
@@ -33,7 +33,7 @@ export class AppServiceService {
 
   getJourneys(params: IGetRowsParams, page: number, size: number) {
     let emptyValue: GenericGrid<Journey>;
-    this.http.post<GenericGrid<Journey>>("http://localhost:8080/journeys", {
+    this.http.post<GenericGrid<Journey>>("http://localhost:8181/journeys", {
       page: page,
       size: size,
       sortModel: params.sortModel,
@@ -49,7 +49,7 @@ export class AppServiceService {
 
   getStationsGeo(): Observable<StationMarker | StationMarker[]> {
     let stationsGeo: StationMarker;
-    return this.http.get<StationMarker[]>("http://localhost:8080/stationsGeo")
+    return this.http.get<StationMarker[]>("http://localhost:8181/stationsGeo")
       .pipe(
         map((data: StationMarker[]) => data),
         catchError(() => of(stationsGeo))
@@ -58,7 +58,7 @@ export class AppServiceService {
 
   getJourneysTopDepart(params: IGetRowsParams, station: string) {
     let emptyValue: Journey[];
-    this.http.get<Journey[]>("http://localhost:8080/top5Depart", {params: {stationId: station}})
+    this.http.get<Journey[]>("http://localhost:8181/top5Depart", {params: {stationId: station}})
       .pipe(
         catchError(() => of(emptyValue))
       )
@@ -69,7 +69,7 @@ export class AppServiceService {
 
   getJourneysTopReturn(params: IGetRowsParams, station: string) {
     let emptyValue: Journey[];
-    this.http.get<Journey[]>("http://localhost:8080/top5Ret", {params: {stationId: station}})
+    this.http.get<Journey[]>("http://localhost:8181/top5Ret", {params: {stationId: station}})
       .pipe(
         catchError(() => of(emptyValue))
       )
@@ -79,19 +79,19 @@ export class AppServiceService {
   }
 
   getJourneysAvg(station: string): Observable<string[]> {
-    return this.http.get<string[]>("http://localhost:8080/avgDistance", {params: {stationId: station}})
+    return this.http.get<string[]>("http://localhost:8181/avgDistance", {params: {stationId: station}})
       .pipe(
         catchError(() => of([]))
       );
   }
 
   saveStation(station: Station) {
-    this.http.post<void>("http://localhost:8080/savestation", station).subscribe(data => {
+    this.http.post<void>("http://localhost:8181/savestation", station).subscribe(data => {
     });
   }
 
   saveJourney(journey: Journey) {
-    this.http.post<void>("http://localhost:8080/savejourney", journey).subscribe(data => {
+    this.http.post<void>("http://localhost:8181/savejourney", journey).subscribe(data => {
     });
   }
 }
