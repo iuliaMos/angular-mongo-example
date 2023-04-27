@@ -47,10 +47,10 @@ export class JourneysComponent implements OnInit {
   }
 
   dateFormatter(params: any) {
-    let date: number[] = params.value;
-    if (date === undefined || date.length != 6) {
-      return '';
+    if (params.value === undefined || !(params.value instanceof Array) || params.value.length < 5) {
+      return params.value;
     }
-    return formatDate(new Date(date[0], date[1] - 1, date[2], date[3], date[4], date[5]), 'yyyy-MM-dd hh:mm:ss', 'en-GB');
+    let date: number[] = params.value;
+    return formatDate(new Date(date[0], date[1] - 1, date[2], date[3], date[4], date.length == 6? date[5] : 0), 'yyyy-MM-dd hh:mm:ss', 'en-GB');
   }
 }

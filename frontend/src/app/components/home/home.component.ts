@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -18,7 +18,7 @@ import {StationMarker} from "../../models/stationMarker";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   public map!: Map;
 
   constructor(private route: ActivatedRoute, private appService: AppServiceService) {
@@ -129,6 +129,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
         overlay.setPosition(coordinates);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.map.dispose();
   }
 
 }

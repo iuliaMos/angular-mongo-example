@@ -10,13 +10,13 @@ import {AppServiceService} from "../../../../services/app-service.service";
 })
 export class DialogInfoStationComponent implements OnInit {
   station: Station = {} as Station;
-  avgDistance: string = "";
+  infoStation: string[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Station, private appService: AppServiceService) {
     this.station = data;
     this.appService.getJourneysAvg(this.station.externalId)
       .subscribe(data => {
-        this.avgDistance = data? data[0]: "";
+        this.infoStation = data;
       });
   }
 

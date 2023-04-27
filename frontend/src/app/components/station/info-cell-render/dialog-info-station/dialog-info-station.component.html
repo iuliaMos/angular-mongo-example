@@ -1,12 +1,19 @@
 <h1 mat-dialog-title>Station Info</h1>
 <div mat-dialog-content>
-  <div>
-    <span>Average journeys distance: {{avgDistance}}</span>
+  <div *ngFor="let str of infoStation">
+    <span>{{str}}</span>
+    <br/>
   </div>
   <br/>
   <mat-tab-group>
-    <mat-tab label="Station on the map"><app-map-station [selectedStation]="station"/></mat-tab>
-    <mat-tab label="Top 5 journeys departure"><app-journeys [selectedStation]="station" typeTop="DEPARTURE"/></mat-tab>
-    <mat-tab label="Top 5 journeys return"><app-journeys [selectedStation]="station" typeTop="RETURN"/></mat-tab>
+    <mat-tab label="Station on the map">
+      <app-map-station [selectedStation]="station"/>
+    </mat-tab>
+    <mat-tab label="Top 5 journeys departure">
+      <app-journeys [selectedStation]="station" typeTop="DEPARTURE"/>
+    </mat-tab>
+    <mat-tab label="Top 5 journeys return">
+      <app-journeys [selectedStation]="station" typeTop="RETURN"/>
+    </mat-tab>
   </mat-tab-group>
 </div>
