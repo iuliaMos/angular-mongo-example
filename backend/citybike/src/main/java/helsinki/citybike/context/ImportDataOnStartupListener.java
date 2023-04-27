@@ -1,8 +1,8 @@
 package helsinki.citybike.context;
 
 import com.opencsv.CSVReader;
-import helsinki.citybike.entities.HSLJourney;
-import helsinki.citybike.entities.HSLStation;
+import helsinki.citybike.dto.JourneyDTO;
+import helsinki.citybike.dto.StationDTO;
 import helsinki.citybike.services.JourneyService;
 import helsinki.citybike.services.StationService;
 import lombok.Data;
@@ -69,8 +69,8 @@ public class ImportDataOnStartupListener implements ApplicationListener<ContextR
         log.info("End imported stations");
     }
 
-    private HSLStation createNewStationEntity(String[] line) {
-        return HSLStation.builder()
+    private StationDTO createNewStationEntity(String[] line) {
+        return StationDTO.builder()
                 .nr(Long.valueOf(line[0]))
                 .externalId(line[1])
                 .nameFi(line[2])
@@ -112,8 +112,8 @@ public class ImportDataOnStartupListener implements ApplicationListener<ContextR
         return getLongValueFromField(line[7]).compareTo(10L) < 0;
     }
 
-    private HSLJourney createNewJourneyEntity(String[] line) {
-        return HSLJourney.builder()
+    private JourneyDTO createNewJourneyEntity(String[] line) {
+        return JourneyDTO.builder()
                 .departureTime(getDateTimeFromField(line[0]))
                 .returnTime(getDateTimeFromField(line[1]))
                 .departureStationId(line[2])

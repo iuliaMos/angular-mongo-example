@@ -1,6 +1,7 @@
 package helsinki.citybike.controller;
 
 
+import helsinki.citybike.dto.StationDTO;
 import helsinki.citybike.entities.HSLStation;
 import helsinki.citybike.services.StationService;
 import lombok.AllArgsConstructor;
@@ -21,13 +22,13 @@ public class StationValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return HSLStation.class.equals(clazz);
+        return StationDTO.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "externalId", "externalId.required");
-        HSLStation station = (HSLStation) target;
+        StationDTO station = (StationDTO) target;
         HSLStation existing = stationService.findByExternalId(station.getExternalId());
         if (existing != null && existing.getId() != null) {
             errors.rejectValue("externalId", "uniqueValue", new Object[]{"'externalId'"}, "externalId must be unique");
