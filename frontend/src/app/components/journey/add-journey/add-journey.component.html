@@ -1,48 +1,85 @@
-<h3> Add new Journey</h3>
-<div mat-dialog-content class="form">
-  <form [formGroup]="journeyForm">
+<form [formGroup]="journeyForm" class="form">
 
+  <mat-card-header>
+    <mat-card-title>Add new Journey</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
     <div class="row">
-      <label for="departureTime" class="col">DepartureTime: </label>
-      <input id="departureTime" type="datetime-local" formControlName="departureTime" class="col" required>
+      <mat-form-field class="full-width">
+        <mat-label class="form-control">DepartureTime:</mat-label>
+        <input matInput id="departureTime" type="datetime-local" formControlName="departureTime" class="form-control" required>
+        <mat-error *ngIf="errorHandling('departureTime', 'required')">
+          You must provide <strong>departureTime</strong>
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <div class="row">
-      <label for="returnTime" class="col">ReturnTime: </label>
-      <input id="returnTime" type="datetime-local" formControlName="returnTime" class="col" required>
+      <mat-form-field class="full-width">
+        <mat-label class="form-control">ReturnTime:</mat-label>
+        <input matInput id="returnTime" type="datetime-local" formControlName="returnTime" class="form-control" required>
+        <mat-error *ngIf="errorHandling('returnTime', 'required')">
+          You must provide <strong>returnTime</strong>
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <div class="row">
-      <label for="departureStationId" class="col">DepartureStationId: </label>
-      <input id="departureStationId" type="text" formControlName="departureStationId" class="col" required>
+      <mat-form-field class="full-width">
+        <mat-label class="form-control">DepartureStationId:</mat-label>
+        <input matInput id="departureStationId" type="text" formControlName="departureStationId" class="form-control" required>
+        <mat-error *ngIf="errorHandling('departureStationId', 'required')">
+          You must provide <strong>departureStationId</strong>
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <div class="row">
-      <label for="departureStationName" class="col">DepartureStationName: </label>
-      <input id="departureStationName" type="text" formControlName="departureStationName" class="col">
+      <mat-form-field class="full-width">
+        <mat-label class="form-control">DepartureStationName:</mat-label>
+        <input matInput id="departureStationName" type="text" formControlName="departureStationName" class="form-control">
+      </mat-form-field>
     </div>
 
     <div class="row">
-      <label for="returnStationId" class="col">ReturnStationId: </label>
-      <input id="returnStationId" type="text" formControlName="returnStationId" class="col" required>
+      <mat-form-field class="full-width">
+        <mat-label class="form-control">ReturnStationId:</mat-label>
+        <input matInput id="returnStationId" type="text" formControlName="returnStationId" class="form-control" required>
+        <mat-error *ngIf="errorHandling('returnStationId', 'required')">
+          You must provide <strong>returnStationId</strong>
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <div class="row">
-      <label for="returnStationName" class="col">ReturnStationName: </label>
-      <input id="returnStationName" type="text" formControlName="returnStationName" class="col">
+      <mat-form-field class="full-width">
+        <mat-label class="form-control">ReturnStationName:</mat-label>
+        <input matInput id="returnStationName" type="text" formControlName="returnStationName" class="form-control">
+      </mat-form-field>
     </div>
 
     <div class="row">
-      <label for="distance" class="col">Distance: </label>
-      <input id="distance" type="number" formControlName="distance" class="col" required>
+      <mat-form-field class="full-width">
+        <mat-label class="form-control">Distance:</mat-label>
+        <input matInput id="distance" type="number" formControlName="distance" class="form-control" required>
+        <mat-error *ngIf="errorHandling('distance', 'required')">
+          You must provide <strong>distance</strong>
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <div class="row">
-      <label for="duration" class="col">Duration: </label>
-      <input id="duration" type="number" formControlName="duration" class="col" required>
+      <mat-form-field class="full-width">
+        <mat-label class="form-control">Duration:</mat-label>
+        <input matInput id="duration" type="number" formControlName="duration" class="form-control" required>
+        <mat-error *ngIf="errorHandling('duration', 'required')">
+          You must provide <strong>duration</strong>
+        </mat-error>
+      </mat-form-field>
     </div>
 
-
-    <button type="submit" [disabled]="!journeyForm.valid" (click)="onSubmit()" >Submit</button>
-  </form>
-</div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button type="submit" [disabled]="!journeyForm.valid" (click)="onSubmit()" mat-raised-button color="primary">Submit</button>
+  </mat-card-actions>
+</form>

@@ -29,4 +29,8 @@ export class AddJourneyComponent {
     this.appService.saveJourney(this.journeyForm.value);
     this.dialogRef.close();
   }
+
+  public errorHandling = (control: string, error: string) => {
+    return this.journeyForm.controls[control].hasError(error);
+  }
 }

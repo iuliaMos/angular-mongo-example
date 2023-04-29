@@ -36,4 +36,8 @@ export class AddStationComponent implements OnInit{
     this.appService.saveStation(this.stationForm.value);
     this.dialogRef.close();
   }
+
+  public errorHandling = (control: string, error: string) => {
+    return this.stationForm.controls[control].hasError(error);
+  }
 }

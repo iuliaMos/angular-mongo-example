@@ -33,6 +33,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   exports: [
@@ -52,6 +54,7 @@ import {MatTreeModule} from '@angular/material/tree';
     MatGridListModule,
     MatIconModule,
     MatInputModule,
+    MatFormFieldModule,
     MatListModule,
     MatMenuModule,
     MatNativeDateModule,
@@ -71,6 +74,7 @@ import {MatTreeModule} from '@angular/material/tree';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    ReactiveFormsModule
   ]
 })
 export class MaterialModule {
