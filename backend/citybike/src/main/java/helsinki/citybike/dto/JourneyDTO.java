@@ -19,12 +19,9 @@ public class JourneyDTO {
 
     @NotBlank
     private String departureStationId;
-    @NotBlank
     private String departureStationName;
-
     @NotBlank
     private String returnStationId;
-    @NotBlank
     private String returnStationName;
 
     @NotNull

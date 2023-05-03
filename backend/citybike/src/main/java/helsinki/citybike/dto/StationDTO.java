@@ -23,7 +23,6 @@ public class StationDTO {
     @NotNull
     private String addressFi;
     private String addressSe;
-    @NotNull
     private String cityFi;
     private String citySe;
     private String operator;
