@@ -1,0 +1,92 @@
+[
+  {
+    "_class": "helsinki.citybike.entities.HSLJourney",
+    "id": "dsfsd546456541",
+    "departureTime": "2022-12-03T10:15:30",
+    "returnTime": "2022-12-03T14:15:30",
+    "departureStationId": "001",
+    "returnStationId": "002",
+    "distance": 30,
+    "duration": 80
+  },
+  {
+    "_class": "helsinki.citybike.entities.HSLJourney",
+    "id": "dsfsd546456542",
+    "departureTime": "2022-11-03T10:15:30",
+    "returnTime": "2022-11-03T14:15:30",
+    "departureStationId": "002",
+    "returnStationId": "003",
+    "distance": 10,
+    "duration": 10
+  },
+  {
+    "_class": "helsinki.citybike.entities.HSLJourney",
+    "id": "dsfsd546456543",
+    "departureTime": "2022-09-03T10:15:30",
+    "returnTime": "2022-09-03T14:15:30",
+    "departureStationId": "001",
+    "returnStationId": "002",
+    "distance": 10,
+    "duration": 10
+  },
+  {
+    "_class": "helsinki.citybike.entities.HSLJourney",
+    "id": "dsfsd546456544",
+    "departureTime": "2022-08-03T10:15:30",
+    "returnTime": "2022-08-03T14:15:30",
+    "departureStationId": "001",
+    "returnStationId": "002",
+    "distance": 10,
+    "duration": 10
+  },
+  {
+    "_class": "helsinki.citybike.entities.HSLJourney",
+    "id": "dsfsd546456545",
+    "departureTime": "2022-07-03T10:15:30",
+    "returnTime": "2022-07-03T14:15:30",
+    "departureStationId": "002",
+    "returnStationId": "003",
+    "distance": 30,
+    "duration": 80
+  },
+  {
+    "_class": "helsinki.citybike.entities.HSLJourney",
+    "id": "dsfsd546456546",
+    "departureTime": "2022-06-03T10:15:30",
+    "returnTime": "2022-06-03T14:15:30",
+    "departureStationId": "001",
+    "returnStationId": "002",
+    "distance": 10,
+    "duration": 10
+  },
+  {
+    "_class": "helsinki.citybike.entities.HSLJourney",
+    "id": "dsfsd546456547",
+    "departureTime": "2022-05-03T10:15:30",
+    "returnTime": "2022-05-03T14:15:30",
+    "departureStationId": "006",
+    "returnStationId": "008",
+    "distance": 10,
+    "duration": 100
+  },
+  {
+    "_class": "helsinki.citybike.entities.HSLJourney",
+    "id": "dsfsd546456548",
+    "departureTime": "2022-06-03T10:15:30",
+    "returnTime": "2022-06-03T14:15:30",
+    "departureStationId": "005",
+    "returnStationId": "006",
+    "distance": 10,
+    "duration": 20
+  },
+  {
+    "_class": "helsinki.citybike.entities.HSLJourney",
+    "id": "dsfsd546456549",
+    "departureTime": "2022-03-03T10:15:30",
+    "returnTime": "2022-03-03T14:15:30",
+    "departureStationId": "001",
+    "returnStationId": "003",
+    "distance": 100,
+    "duration": 100
+  }
+]

@@ -4,7 +4,10 @@ import helsinki.citybike.dto.JourneyDTO;
 import helsinki.citybike.dto.StationDTO;
 import helsinki.citybike.entities.HSLJourney;
 import helsinki.citybike.entities.HSLStation;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +17,9 @@ public class EntityModelMapper {
     }
 
     public static HSLJourney toEntity(JourneyDTO dto) {
+        if (dto == null) {
+            return null;
+        }
         return HSLJourney.builder()
                 .departureTime(dto.getDepartureTime())
                 .returnTime(dto.getReturnTime())
@@ -27,6 +33,9 @@ public class EntityModelMapper {
     }
 
     public static JourneyDTO toDTO(HSLJourney entity) {
+        if (entity == null) {
+            return null;
+        }
         return JourneyDTO.builder()
                 .departureTime(entity.getDepartureTime())
                 .returnTime(entity.getReturnTime())
@@ -40,6 +49,9 @@ public class EntityModelMapper {
     }
 
     public static HSLStation toEntity(StationDTO dto) {
+        if (dto == null || dto.getX() == null || dto.getY() == null) {
+            return null;
+        }
         return HSLStation.builder()
                 .nr(dto.getNr())
                 .externalId(dto.getExternalId())
@@ -52,12 +64,14 @@ public class EntityModelMapper {
                 .citySe(dto.getCitySe())
                 .operator(dto.getOperator())
                 .capacities(dto.getCapacities())
-                .x(dto.getX())
-                .y(dto.getY())
+                .location(new GeoJsonPoint(dto.getX(), dto.getY()))
                 .build();
     }
 
     public static StationDTO toDTO(HSLStation entity) {
+        if (entity == null) {
+            return null;
+        }
         return StationDTO.builder()
                 .nr(entity.getNr())
                 .externalId(entity.getExternalId())
@@ -70,21 +84,22 @@ public class EntityModelMapper {
                 .citySe(entity.getCitySe())
                 .operator(entity.getOperator())
                 .capacities(entity.getCapacities())
-                .x(entity.getX())
-                .y(entity.getY())
+                .x(entity.getLocation().getX())
+                .y(entity.getLocation().getY())
                 .build();
     }
 
     public static List<StationDTO> toStationDTOList(List<HSLStation> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return new ArrayList<>();
+        }
         return list.stream().map(EntityModelMapper::toDTO).collect(Collectors.toList());
     }
+
     public static List<JourneyDTO> toJourneyDTOList(List<HSLJourney> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return new ArrayList<>();
+        }
         return list.stream().map(EntityModelMapper::toDTO).collect(Collectors.toList());
-    }
-    public static List<HSLStation> toStationEntityList(List<StationDTO> list) {
-        return list.stream().map(EntityModelMapper::toEntity).collect(Collectors.toList());
-    }
-    public static List<HSLJourney> toJourneyEntityList(List<JourneyDTO> list) {
-        return list.stream().map(EntityModelMapper::toEntity).collect(Collectors.toList());
     }
 }

@@ -23,7 +23,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +30,6 @@ import java.util.Optional;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 @Service
-@Transactional
 @AllArgsConstructor
 @Slf4j
 public class JourneyService {
@@ -54,11 +52,11 @@ public class JourneyService {
         GroupOperation countReturns = group("departureStationId", "returnStationId").count().as("departCount")
                 .first("$$ROOT").as("objId");
         SortOperation sortByCount = sort(Sort.Direction.DESC, "departCount");
-        MatchOperation filter = match(Criteria.where("_id.departureStationId").is(station.getExternalId()));
+        MatchOperation filter = match(Criteria.where("departureStationId").is(station.getExternalId()));
         LimitOperation limit = limit(5);
         ReplaceRootOperation replaceRootOperation = replaceRoot("$objId");
 
-        Aggregation aggregation = newAggregation(countReturns, filter, sortByCount, limit, replaceRootOperation);
+        Aggregation aggregation = newAggregation(filter, countReturns, sortByCount, limit, replaceRootOperation);
 
         AggregationResults<HSLJourney> result = mongoTemplate
                 .aggregate(aggregation, mongoTemplate.getCollectionName(HSLJourney.class), HSLJourney.class);
@@ -66,14 +64,14 @@ public class JourneyService {
     }
 
     public List<JourneyDTO> top5Return(final HSLStation station) {
-        GroupOperation countReturns = group("returnStationId", "departureStationId").count().as("returnCount")
+        GroupOperation countReturns = group("departureStationId", "returnStationId").count().as("returnCount")
                 .first("$$ROOT").as("objId");
         SortOperation sortByCount = sort(Sort.Direction.DESC, "returnCount");
-        MatchOperation filter = match(Criteria.where("_id.returnStationId").is(station.getExternalId()));
+        MatchOperation filter = match(Criteria.where("returnStationId").is(station.getExternalId()));
         LimitOperation limit = limit(5);
         ReplaceRootOperation replaceRootOperation = replaceRoot("$objId");
 
-        Aggregation aggregation = newAggregation(countReturns, filter, sortByCount, limit, replaceRootOperation);
+        Aggregation aggregation = newAggregation(filter, countReturns, sortByCount, limit, replaceRootOperation);
 
         AggregationResults<HSLJourney> result = mongoTemplate
                 .aggregate(aggregation, mongoTemplate.getCollectionName(HSLJourney.class), HSLJourney.class);

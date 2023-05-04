@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public class HSLJourney {
 
     @Id
-    private String Id;
+    private String id;
 
     @NotNull
     private LocalDateTime departureTime;
@@ -34,12 +34,10 @@ public class HSLJourney {
 
     @NotBlank
     private String departureStationId;
-    @NotBlank
     private String departureStationName;
 
     @NotBlank
     private String returnStationId;
-    @NotBlank
     private String returnStationName;
 
     @NotNull

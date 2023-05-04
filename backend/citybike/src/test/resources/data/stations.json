@@ -1,0 +1,47 @@
+[
+  {
+    "_class": "helsinki.citybike.entities.HSLStation",
+    "id": "dsfsd54645654",
+    "externalId": "001",
+    "nameFi": "abc1",
+    "nameEn": "abc1",
+    "addressFi": "addr",
+    "cityFi": "Espoo",
+    "location": {
+      "coordinates": [
+        4,
+        6
+      ]
+    }
+  },
+  {
+    "_class": "helsinki.citybike.entities.HSLStation",
+    "id": "jhkhjk67867",
+    "externalId": "002",
+    "nameFi": "abc2",
+    "nameEn": "abc2",
+    "addressFi": "addr",
+    "cityFi": "Espoo",
+    "location": {
+      "coordinates": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "_class": "helsinki.citybike.entities.HSLStation",
+    "id": "dfgrtreh",
+    "externalId": "003",
+    "nameFi": "abc3",
+    "nameEn": "abc3",
+    "addressFi": "addr",
+    "cityFi": "Espoo",
+    "location": {
+      "coordinates": [
+        1,
+        2
+      ]
+    }
+  }
+]

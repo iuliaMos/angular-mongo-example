@@ -77,19 +77,17 @@ public class MainController {
 
     @ApiOperation(value = "Save station")
     @PostMapping(value = "/savestation", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public void saveStation(@Valid @RequestBody StationDTO station, BindingResult bindingResult) {
+    public void saveStation(@Valid @RequestBody StationDTO station, BindingResult bindingResult) throws BusinessException {
         validator.validate(station, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("{}", bindingResult.getAllErrors());
-            return;
+            throw new BusinessException("error", bindingResult);
         }
         stationService.save(station);
     }
 
     @ApiOperation(value = "Save journey")
     @PostMapping(value = "/savejourney", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     public void saveJourney(@Valid @RequestBody JourneyDTO journey) {
         journeyService.save(journey);
     }

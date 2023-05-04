@@ -16,14 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 @AllArgsConstructor
 @Slf4j
 public class StationService {
@@ -43,7 +41,7 @@ public class StationService {
 
     public List<StationMapMarkerDTO> getStationsGeo() {
         return stationRepository.findAll().stream()
-                .map(entity -> new StationMapMarkerDTO(entity.getX(), entity.getY(), entity.getNameEn()))
+                .map(entity -> new StationMapMarkerDTO(entity.getLocation().getX(), entity.getLocation().getY(), entity.getNameEn()))
                 .collect(Collectors.toList());
     }
 

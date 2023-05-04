@@ -2,6 +2,7 @@ package helsinki.citybike.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -25,7 +26,9 @@ public class JourneyDTO {
     private String returnStationName;
 
     @NotNull
+    @Min(10)
     private Double distance; // in meters
     @NotNull
+    @Min(10)
     private Long duration; // in seconds
 }

@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
@@ -26,6 +27,7 @@ import static helsinki.citybike.util.StringConversionUtils.*;
 @Component
 @Data
 @Slf4j
+@Profile("!test")
 public class ImportDataOnStartupListener implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
