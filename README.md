@@ -34,7 +34,7 @@ So the build + start up + import could take 1h.
 
 ## Application details
 Frontend app can be accessed at : http://localhost:8282 \
-Backend app can be accessed at : http://localhost:8112 \
+Backend app can be accessed at : http://localhost:8181 \
 The REST API documentation can be found at: http://localhost:8181/swagger-ui/#/main-controller. \
 The application contains a following menu:
    - Home - displays a map with all stations and when a station icon is clicked a popup with station name will be shown.
@@ -45,7 +45,8 @@ Station's info looks like this:
 ![](https://github.com/iuliaMos/angular-mongo-example/blob/main/station-info.png)
 
 
-The Application is tested using JUnit and [Mockito](https://site.mockito.org/) for Unit Tests and [SpringBootTests](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.testing) for Integration Tests.
+The backend is tested using JUnit and [Mockito](https://site.mockito.org/) for Unit Tests and [SpringBootTests](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.testing) for Integration Tests.
+There are no tests for frontend.
 
 ### Functionalities accomplished and in progress:
 - [x] Data is validated before importing from CSV (like ignore journeys with less than 10 sec and with a distance with less than 10 m)
@@ -66,7 +67,7 @@ The Application is tested using JUnit and [Mockito](https://site.mockito.org/) f
 - [ ] Increase performance of the Mongo DB (like sharding)
 - [ ] Angular Lazy-load components
 - [ ] Improve css and style
-- [ ] Adding a new journey: departureDate and returnDate should use a DateTime picker
+- [ ] Adding a new journey: departureDate and returnDate should use a DateTime picker on click field(now DateTime picker is available on Space press)
 
 ## Author
 [Iulia Moscalenco](https://github.com/iuliaMos)
