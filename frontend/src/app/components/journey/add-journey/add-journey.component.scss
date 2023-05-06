@@ -14,3 +14,8 @@
   display: table;
   clear: both;
 }
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator{
+  display: inline;
+  -webkit-appearance: initial;
+}

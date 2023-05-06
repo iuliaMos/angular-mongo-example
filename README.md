@@ -60,6 +60,7 @@ There are no tests for frontend.
   - Top 5 most popular departure stations for journeys ending at the station
 - [x] IT use Embedded MongoDB loading data and cleaning before each test
 - [x] Uses [GeoJsonPoint](https://www.mongodb.com/docs/manual/reference/geojson/) for storing geolocation coordinates
+- [x] Adding a new journey: departureDate and returnDate should use a DateTime picker on click field(now DateTime picker is available on Space press)
 - [ ] Missing relation between Journey and Station
 - [ ] Adding a new Journey does not validate if the station exists (this can be accomplished with an inline auto complete list)
 - [ ] There is possibility to add more types of filtering per column
@@ -67,7 +68,6 @@ There are no tests for frontend.
 - [ ] Increase performance of the Mongo DB (like sharding)
 - [ ] Angular Lazy-load components
 - [ ] Improve css and style
-- [ ] Adding a new journey: departureDate and returnDate should use a DateTime picker on click field(now DateTime picker is available on Space press)
 
 ## Author
 [Iulia Moscalenco](https://github.com/iuliaMos)
