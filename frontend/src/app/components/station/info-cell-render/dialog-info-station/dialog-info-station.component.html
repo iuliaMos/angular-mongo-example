@@ -7,13 +7,19 @@
   <br/>
   <mat-tab-group>
     <mat-tab label="Station on the map">
-      <app-map-station [selectedStation]="station"/>
+      <ng-template matTabContent>
+        <app-map-station [selectedStation]="station"/>
+      </ng-template>
     </mat-tab>
     <mat-tab label="Top 5 journeys departure">
-      <app-journeys [selectedStation]="station" typeTop="DEPARTURE"/>
+      <ng-template matTabContent>
+        <app-journeys [selectedStation]="station" typeTop="DEPARTURE"/>
+      </ng-template>
     </mat-tab>
     <mat-tab label="Top 5 journeys return">
-      <app-journeys [selectedStation]="station" typeTop="RETURN"/>
+      <ng-template matTabContent>
+        <app-journeys [selectedStation]="station" typeTop="RETURN"/>
+      </ng-template>
     </mat-tab>
   </mat-tab-group>
 </div>

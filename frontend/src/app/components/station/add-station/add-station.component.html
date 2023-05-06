@@ -114,6 +114,10 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
+    <div *ngFor="let errorField of messageValid | keyvalue">
+      <p>{{errorField.key}} - {{errorField.value}}</p>
+    </div>
+
     <button type="submit" [disabled]="!stationForm.valid" (click)="onSubmit()" mat-raised-button color="primary">
       Submit
     </button>

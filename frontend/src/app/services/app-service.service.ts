@@ -85,13 +85,12 @@ export class AppServiceService {
       );
   }
 
-  saveStation(station: Station) {
-    this.http.post<void>("http://localhost:8181/savestation", station).subscribe(data => {
-    });
+  saveStation(station: Station): Observable<any> {
+    return this.http.post<any>("http://localhost:8181/savestation", station);
   }
 
   saveJourney(journey: Journey) {
-    this.http.post<void>("http://localhost:8181/savejourney", journey).subscribe(data => {
+    this.http.post<void>("http://localhost:8181/savejourney", journey).subscribe(() => {
     });
   }
 }
