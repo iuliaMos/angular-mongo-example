@@ -34,7 +34,7 @@ public class GlobalControllerExceptionHandler {
     public ResponseEntity<Map<String, String>> handleValidationException(BusinessException ex) {
         log.error("exception", ex);
         Map<String, String> errors = ex.getBindingResult().getFieldErrors()
-                .stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+                .stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (a, b) -> a + ", " + b));
         return new ResponseEntity<>(errors, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 

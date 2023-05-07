@@ -22,8 +22,8 @@ export class AddJourneyComponent {
       departureStationName: [''],
       returnStationId: ['', Validators.required],
       returnStationName: [''],
-      distance: ['', Validators.required, Validators.min(10)],
-      duration: ['', Validators.required, Validators.min(10)]
+      distance: ['', Validators.required],
+      duration: ['', Validators.required]
     });
   }
 

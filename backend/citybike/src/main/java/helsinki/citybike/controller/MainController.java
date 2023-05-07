@@ -25,7 +25,8 @@ public class MainController {
 
     private StationService stationService;
     private JourneyService journeyService;
-    private StationValidator validator;
+    private StationValidator stationValidator;
+    private JourneyValidator journeyValidator;
 
     @ApiOperation(value = "Returns stations filtered and paginated")
     @PostMapping(value = "/stations", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -78,7 +79,7 @@ public class MainController {
     @ApiOperation(value = "Save station")
     @PostMapping(value = "/savestation", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveStation(@Valid @RequestBody StationDTO station, BindingResult bindingResult) throws BusinessException {
-        validator.validate(station, bindingResult);
+        stationValidator.validate(station, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("{}", bindingResult.getAllErrors());
             throw new BusinessException("error", bindingResult);
@@ -88,7 +89,12 @@ public class MainController {
 
     @ApiOperation(value = "Save journey")
     @PostMapping(value = "/savejourney", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveJourney(@Valid @RequestBody JourneyDTO journey) {
+    public void saveJourney(@Valid @RequestBody JourneyDTO journey, BindingResult bindingResult) throws BusinessException {
+        journeyValidator.validate(journey, bindingResult);
+        if (bindingResult.hasErrors()) {
+            log.info("{}", bindingResult.getAllErrors());
+            throw new BusinessException("error", bindingResult);
+        }
         journeyService.save(journey);
     }
 }

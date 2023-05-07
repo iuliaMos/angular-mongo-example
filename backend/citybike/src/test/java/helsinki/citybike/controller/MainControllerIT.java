@@ -6,13 +6,10 @@ import helsinki.citybike.DatabaseImportConfig;
 import helsinki.citybike.dto.GridParamsDTO;
 import helsinki.citybike.dto.JourneyDTO;
 import helsinki.citybike.dto.StationDTO;
-import helsinki.citybike.repository.HSLJourneyRepository;
-import helsinki.citybike.repository.HSLStationRepository;
 import helsinki.citybike.specifications.GridSortModel;
 import helsinki.citybike.specifications.filter.BasicColumnFilter;
 import helsinki.citybike.specifications.filter.JourneySearchCriteria;
 import helsinki.citybike.specifications.filter.StationSearchCriteria;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -131,9 +128,11 @@ public class MainControllerIT {
         String content = result.getResponse().getContentAsString();
         assertThat(content, containsString("\"duration\":\"must not be null\""));
         assertThat(content, containsString("\"departureTime\":\"must not be null\""));
-        assertThat(content, containsString("\"returnStationId\":\"must not be blank\""));
+        assertThat(content, containsString("\"returnStationId\":\"must not be blank"));
+        assertThat(content, containsString("returnStationId must be a valid station externalId"));
         assertThat(content, containsString("\"distance\":\"must not be null\""));
-        assertThat(content, containsString("\"departureStationId\":\"must not be blank\""));
+        assertThat(content, containsString("\"departureStationId\":\"must not be blank"));
+        assertThat(content, containsString("departureStationId must be a valid station externalId"));
         assertThat(content, containsString("\"returnTime\":\"must not be null\""));
 
         dto = JourneyDTO.builder()
@@ -155,6 +154,26 @@ public class MainControllerIT {
         content = result.getResponse().getContentAsString();
         assertThat(content, containsString("\"duration\":\"must be greater than or equal to 10\""));
         assertThat(content, containsString("\"distance\":\"must be greater than or equal to 10\""));
+
+        dto = JourneyDTO.builder()
+                .departureTime(LocalDateTime.now())
+                .returnTime(LocalDateTime.now())
+                .departureStationId("001invalid")
+                .returnStationId("002invalid")
+                .distance(50d)
+                .duration(80l)
+                .build();
+        result = this.mockMvc.perform(MockMvcRequestBuilders
+                        .post("/savejourney")
+                        .content(asJsonString(mapper, dto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest()).andReturn();
+
+        content = result.getResponse().getContentAsString();
+        assertThat(content, containsString("\"returnStationId\":\"returnStationId must be a valid station externalId\""));
+        assertThat(content, containsString("\"departureStationId\":\"departureStationId must be a valid station externalId\""));
     }
 
     @Test
