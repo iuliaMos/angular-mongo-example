@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppServiceService} from "../../../services/app-service.service";
 import {MatDialogRef} from "@angular/material/dialog";
+import {catchError, of} from "rxjs";
 
 @Component({
   selector: 'app-add-journey',
@@ -11,6 +12,7 @@ import {MatDialogRef} from "@angular/material/dialog";
 export class AddJourneyComponent {
 
   journeyForm!: FormGroup;
+  messageValid:Map<string,string> = new Map();
 
   constructor(private fb: FormBuilder, private appService: AppServiceService, private dialogRef: MatDialogRef<AddJourneyComponent>) {
     this.journeyForm = this.fb.group({
@@ -20,14 +22,25 @@ export class AddJourneyComponent {
       departureStationName: [''],
       returnStationId: ['', Validators.required],
       returnStationName: [''],
-      distance: ['', Validators.required],
-      duration: ['', Validators.required]
+      distance: ['', Validators.required, Validators.min(10)],
+      duration: ['', Validators.required, Validators.min(10)]
     });
   }
 
   onSubmit() {
-    this.appService.saveJourney(this.journeyForm.value);
-    this.dialogRef.close();
+    this.messageValid = new Map();
+    this.appService.saveJourney(this.journeyForm.value)
+      .pipe(
+        catchError(error => {
+          this.messageValid = error.error;
+          return of(error);
+        })
+      )
+      .subscribe(() => {
+        if (this.messageValid.size == 0) {
+          this.dialogRef.close();
+        }
+      });
   }
 
   public errorHandling = (control: string, error: string) => {

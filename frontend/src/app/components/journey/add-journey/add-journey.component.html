@@ -61,9 +61,12 @@
     <div class="row">
       <mat-form-field class="full-width">
         <mat-label class="form-control">Distance:</mat-label>
-        <input matInput id="distance" type="number" formControlName="distance" class="form-control" required>
+        <input matInput id="distance" type="number" formControlName="distance" class="form-control" required min="10">
         <mat-error *ngIf="errorHandling('distance', 'required')">
           You must provide <strong>distance</strong>
+        </mat-error>
+        <mat-error *ngIf="errorHandling('distance', 'min')">
+          Min value is 10
         </mat-error>
       </mat-form-field>
     </div>
@@ -71,15 +74,21 @@
     <div class="row">
       <mat-form-field class="full-width">
         <mat-label class="form-control">Duration:</mat-label>
-        <input matInput id="duration" type="number" formControlName="duration" class="form-control" required>
+        <input matInput id="duration" type="number" formControlName="duration" class="form-control" required min="10">
         <mat-error *ngIf="errorHandling('duration', 'required')">
           You must provide <strong>duration</strong>
+        </mat-error>
+        <mat-error *ngIf="errorHandling('duration', 'min')">
+          Min value is 10
         </mat-error>
       </mat-form-field>
     </div>
 
   </mat-card-content>
   <mat-card-actions>
+    <div *ngFor="let errorField of messageValid | keyvalue">
+      <p>{{errorField.key}} - {{errorField.value}}</p>
+    </div>
     <button type="submit" [disabled]="!journeyForm.valid" (click)="onSubmit()" mat-raised-button color="primary">Submit</button>
   </mat-card-actions>
 </form>

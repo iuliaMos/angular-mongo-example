@@ -89,8 +89,7 @@ export class AppServiceService {
     return this.http.post<any>("http://localhost:8181/savestation", station);
   }
 
-  saveJourney(journey: Journey) {
-    this.http.post<void>("http://localhost:8181/savejourney", journey).subscribe(() => {
-    });
+  saveJourney(journey: Journey): Observable<any> {
+    return this.http.post<any>("http://localhost:8181/savejourney", journey);
   }
 }
