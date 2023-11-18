@@ -1,12 +1,12 @@
-FROM node:18.16.0-alpine As build
+FROM node:16.16.0 As node
 RUN mkdir -p /app
 WORKDIR /app
 COPY package.json /app
 RUN npm install
 COPY . /app
-RUN npm run build
+CMD ["npm", "run", "build"]
 
-FROM nginx:1.23.4-alpine
-COPY --from=build /app/dist/frontend /usr/share/nginx/html
+FROM nginx:1.25.3-alpine-slim
+COPY --from=node /app/dist/frontend /usr/share/nginx/html
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
